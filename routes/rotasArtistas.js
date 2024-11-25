@@ -2,16 +2,16 @@
 const { Router } = require('express');
 
 const { getArtistas, addArtistas, updateArtistas, deleteArtistas, getArtistaPorCodigo} = require('../controllers/artistasController');
-
+const { verificaJWT } = require('../controllers/segurancaController')
 const rotasArtistas = new Router();
 
 rotasArtistas.route('/artistas')
    .get(getArtistas)
-   .post(addArtistas)
-   .put(updateArtistas)
+   .post(verificaJWT,addArtistas)
+   .put(verificaJWT,updateArtistas)
 
 rotasArtistas.route('/artistas/:codigo')
-   .get(getArtistaPorCodigo)
-   .delete(deleteArtistas)
+   .get(verificaJWT,getArtistaPorCodigo)
+   .delete(verificaJWT,deleteArtistas)
 
 module.exports = { rotasArtistas };
